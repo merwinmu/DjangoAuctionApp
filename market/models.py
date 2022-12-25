@@ -11,6 +11,7 @@ class User(AbstractUser):
     winlist = models.ManyToManyField('AuctionListing', blank = True, related_name = "userWinListings")
     inbox = models.IntegerField(default = 0)
     avatar = models.ImageField(upload_to="images", blank=True)
+    active = models.BooleanField(default=False)
 
 class Chat(models.Model):
     members = models.ManyToManyField("User", blank=True, related_name = "userChat")

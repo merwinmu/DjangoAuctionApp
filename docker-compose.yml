@@ -6,13 +6,12 @@ services:
       build: .
       command: python3 manage.py runserver 0.0.0.0:8000
       volumes:
-        - dev_app:/dev-app/
+        - .:/dev-app/
       ports:
         - 8000:8000
       env_file:
         - ./.env.dev
       depends_on:
-        - db_psql
         - db_redis
   
     celery:
@@ -44,9 +43,10 @@ services:
 
     db_psql:
       restart: always
-      image: postgres:14.1-alpine
+      image: postgres:latest
       volumes:
-        - postgres_data:/postgresql/data
+        - postgres-data:/var/lib/postgresql/data
+      user: postgres
       environment:
         - POSTGRES_USER=postgres
         - POSTGRES_PASSWORD=strongpass
@@ -56,9 +56,9 @@ services:
       restart: always
       image: redis:6.2.6
       volumes:
-        - redis_data:/redis/data
+        - redis_data:/data
 
 volumes:
   redis_data:
-  postgres_data:
+  postgres-data:
   dev_app:
