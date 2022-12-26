@@ -11,10 +11,11 @@ from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import F
-
+from rest_framework.viewsets import ViewSet
+from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from rest_framework.parsers import FormParser, MultiPartParser
 from celery.result import AsyncResult
 
 import datetime
@@ -524,3 +525,7 @@ def get_status(request, task_id):
         "task_result": task_result.result
     }
     return JsonResponse(result, status=200)
+
+
+
+
